@@ -470,12 +470,114 @@ h3 {
 }
 
 @media (max-width: 620px) {
+  body {
+    font-size: 15px;
+  }
+
   .content {
-    padding: 32px 16px 48px;
+    padding: 32px 16px 40px;
   }
 
   .sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 16px;
+    align-items: start;
     padding: 20px 16px;
+  }
+
+  .sidebar:not(:has(.sidebar-rose)) {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar:not(:has(.sidebar-rose)) .identity span {
+    max-width: none;
+  }
+
+  .identity {
+    gap: 6px;
+    margin-bottom: 0;
+  }
+
+  .identity strong {
+    font-size: 21px;
+  }
+
+  .identity span {
+    max-width: 210px;
+    font-size: 13px;
+  }
+
+  .sidebar-rose {
+    width: 112px;
+    margin: 0 0 0 auto;
+  }
+
+  .rose-frame {
+    border: 1px solid var(--color-fog-border);
+    border-radius: 3px;
+  }
+
+  .rose-dots {
+    inset: 12px;
+  }
+
+  .rose-dots span {
+    width: 3px;
+    height: 3px;
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    flex-wrap: nowrap;
+    gap: 16px;
+    width: 100%;
+    margin: 0;
+    padding-top: 14px;
+    overflow-x: auto;
+    border-top: 1px solid var(--color-fog-border);
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav a {
+    flex: 0 0 auto;
+    min-height: 32px;
+    font-size: 15px;
+  }
+
+  .home-only .content {
+    min-height: auto;
+  }
+
+  .home-only .hero {
+    place-content: start;
+  }
+
+  h1 {
+    font-size: 30px;
+    letter-spacing: 0.01em;
+  }
+
+  .lead,
+  .intro-copy {
+    font-size: 16px;
+  }
+
+  .actions,
+  .inline-links {
+    gap: 12px;
+  }
+
+  .email-button {
+    min-height: 40px;
+  }
+
+  .ghost {
+    padding: 8px 4px;
   }
 
   .notes-grid {
@@ -483,10 +585,45 @@ h3 {
   }
 
   .section {
-    padding: 48px 0;
+    padding: 40px 0;
+  }
+
+  .entry,
+  .project {
+    gap: 16px;
+    padding-top: 20px;
   }
 
   .footer {
     flex-direction: column;
+    gap: 10px;
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar {
+    grid-template-columns: minmax(0, 1fr) 88px;
+    gap: 12px;
+  }
+
+  .identity strong {
+    font-size: 19px;
+  }
+
+  .sidebar-rose {
+    width: 88px;
+  }
+
+  .rose-dots {
+    inset: 9px;
+  }
+
+  .nav {
+    gap: 14px;
+  }
+
+  .nav a {
+    font-size: 14px;
   }
 }
