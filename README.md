@@ -1,6 +1,6 @@
 # Prithvi Site
 
-Static personal website for Prithvi J.
+Astro personal website for Prithvi J.
 
 Deployed with Vercel.
 
