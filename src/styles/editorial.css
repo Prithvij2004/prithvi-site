@@ -52,19 +52,6 @@ a:hover {
   border-right: 1px solid var(--color-fog-border);
 }
 
-.identity {
-  display: grid;
-  gap: 8px;
-}
-
-.identity strong {
-  color: var(--color-ebony-text);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.identity span,
 .kicker,
 .meta {
   color: var(--color-graphite-text);
@@ -75,7 +62,7 @@ a:hover {
 .nav {
   display: grid;
   gap: 8px;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .nav a {
@@ -124,14 +111,10 @@ a:hover {
   align-self: end;
 }
 
-.home-only .nav {
-  margin-top: 0;
-}
-
 .sidebar-rose {
   display: grid;
   gap: 8px;
-  margin: auto 0;
+  margin: 48px 0 0;
 }
 
 .rose-frame {
@@ -213,6 +196,21 @@ h1 {
   max-width: 850px;
   color: var(--color-slate-text);
   font-size: clamp(32px, 5vw, 40px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.025em;
+}
+
+.hero-name {
+  max-width: 900px;
+  font-size: clamp(38px, 5vw, 48px);
+}
+
+.hero-statement {
+  max-width: 840px;
+  margin-top: 16px;
+  color: var(--color-slate-text);
+  font-size: clamp(28px, 4.2vw, 40px);
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: 0.025em;
@@ -441,10 +439,6 @@ h3 {
     border-bottom: 1px solid var(--color-fog-border);
   }
 
-  .identity {
-    margin-bottom: 24px;
-  }
-
   .nav {
     display: flex;
     flex-wrap: wrap;
@@ -479,38 +473,12 @@ h3 {
   }
 
   .sidebar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 112px;
-    gap: 16px;
-    align-items: start;
     padding: 20px 16px;
-  }
-
-  .sidebar:not(:has(.sidebar-rose)) {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar:not(:has(.sidebar-rose)) .identity span {
-    max-width: none;
-  }
-
-  .identity {
-    gap: 6px;
-    margin-bottom: 0;
-  }
-
-  .identity strong {
-    font-size: 21px;
-  }
-
-  .identity span {
-    max-width: 210px;
-    font-size: 13px;
   }
 
   .sidebar-rose {
     width: 112px;
-    margin: 0 0 0 auto;
+    margin: 18px 0 0;
   }
 
   .rose-frame {
@@ -528,7 +496,6 @@ h3 {
   }
 
   .nav {
-    grid-column: 1 / -1;
     flex-wrap: nowrap;
     gap: 16px;
     width: 100%;
@@ -558,6 +525,15 @@ h3 {
   }
 
   h1 {
+    font-size: 30px;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-name {
+    font-size: 34px;
+  }
+
+  .hero-statement {
     font-size: 30px;
     letter-spacing: 0.01em;
   }
@@ -602,15 +578,6 @@ h3 {
 }
 
 @media (max-width: 360px) {
-  .sidebar {
-    grid-template-columns: minmax(0, 1fr) 88px;
-    gap: 12px;
-  }
-
-  .identity strong {
-    font-size: 19px;
-  }
-
   .sidebar-rose {
     width: 88px;
   }
