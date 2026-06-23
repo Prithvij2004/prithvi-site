@@ -44,11 +44,24 @@
     function resize() {
       const rect = canvas.getBoundingClientRect();
       pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
+      width = rect.width;
+      height = rect.height;
+
+      if (width < 1 || height < 1) {
+        canvas.width = 0;
+        canvas.height = 0;
+        return;
+      }
+
+      width = Math.max(1, width);
+      height = Math.max(1, height);
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
       ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function isDrawable() {
+      return width >= 8 && height >= 8;
     }
 
     function rotate3DPoint(point, pitch, yaw) {
@@ -77,6 +90,11 @@
     }
 
     function draw(time) {
+      if (!isDrawable()) {
+        requestAnimationFrame(draw);
+        return;
+      }
+
       const secondsPassed = previousTime === 0 ? 0 : (time - previousTime) / 1000;
       const centerX = width / 2;
       const centerY = height / 2;
@@ -92,7 +110,7 @@
 
       ctx.clearRect(0, 0, width, height);
       ctx.strokeStyle = "#111827";
-      ctx.lineWidth = 1.15;
+      ctx.lineWidth = Math.max(0.75, Math.min(width, height) * 0.01);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.beginPath();
@@ -145,6 +163,12 @@
     });
 
     window.addEventListener("resize", resize);
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(resize);
+      observer.observe(canvas);
+    }
+
     resize();
     syncState();
     requestAnimationFrame(draw);

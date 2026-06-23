@@ -1,0 +1,110 @@
+---
+const { active = "home", showRose = false } = Astro.props;
+
+const links = [
+  { key: "home", href: "/", label: "Home" },
+  { key: "projects", href: "/projects", label: "Projects" },
+  { key: "blog", href: "/blog", label: "Blog" }
+];
+
+const activeLabel = links.find((link) => link.key === active)?.label ?? "Menu";
+---
+
+<aside class="sidebar" data-collapsible-sidebar>
+  <div class="sidebar-header">
+    <button
+      type="button"
+      class="sidebar-toggle"
+      aria-expanded="false"
+      aria-controls="sidebar-panel"
+    >
+      <span class="sidebar-toggle-label">{activeLabel}</span>
+      <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="sidebar-panel" id="sidebar-panel">
+    <div class="sidebar-panel-inner">
+      <nav class="nav" aria-label="Main navigation">
+        {
+          links.map((link) => (
+            <a class={active === link.key ? "active" : undefined} href={link.href}>
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      {
+        showRose && (
+          <div class="sidebar-rose" aria-label="Interactive rose pattern">
+            <div class="rose-frame">
+              <div class="rose-dots" aria-hidden="true">
+                {Array.from({ length: 25 }).map(() => <span />)}
+              </div>
+              <canvas
+                class="rose-canvas"
+                data-pattern="rose"
+                data-turns="1"
+                data-speed="0.42"
+                data-point-count="1500"
+                data-perspective="3.4"
+                data-auto-rotating="true"
+                data-auto-yaw="0"
+                data-manual-yaw="0"
+                data-manual-pitch="-0.35"
+                data-rotation-yaw="0"
+                data-rotation-pitch="-0.35"
+              />
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</aside>
+
+<script>
+  function initCollapsibleSidebars() {
+    const mobileQuery = window.matchMedia("(max-width: 980px)");
+
+    document.querySelectorAll("[data-collapsible-sidebar]").forEach((sidebar) => {
+      if (!(sidebar instanceof HTMLElement)) return;
+
+      const toggle = sidebar.querySelector(".sidebar-toggle");
+      const panel = sidebar.querySelector(".sidebar-panel");
+      if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+
+      const setExpanded = (expanded) => {
+        sidebar.classList.toggle("is-open", expanded);
+        toggle.setAttribute("aria-expanded", String(expanded));
+
+        if (expanded) {
+          window.requestAnimationFrame(() => {
+            window.dispatchEvent(new Event("resize"));
+          });
+        }
+      };
+
+      toggle.addEventListener("click", () => {
+        setExpanded(!sidebar.classList.contains("is-open"));
+      });
+
+      panel.querySelectorAll(".nav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (mobileQuery.matches) setExpanded(false);
+        });
+      });
+
+      const syncWithViewport = () => {
+        setExpanded(!mobileQuery.matches);
+      };
+
+      mobileQuery.addEventListener("change", syncWithViewport);
+      syncWithViewport();
+    });
+  }
+
+  initCollapsibleSidebars();
+  document.addEventListener("astro:page-load", initCollapsibleSidebars);
+</script>
