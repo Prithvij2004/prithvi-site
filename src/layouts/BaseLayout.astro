@@ -1,14 +1,13 @@
 ---
 import CollapsibleSidebar from "../components/CollapsibleSidebar.astro";
+import Footer from "../components/Footer.astro";
 import "../styles/editorial.css";
 
 const {
   title = "Prithvi J - Editorial",
   description = "Prithvi Jayakumar is an AI and software engineer building practical systems with LLMs, automation, data, and full-stack software.",
   active = "home",
-  bodyClass = "",
-  showRose = false,
-  includeRoseScript = false
+  bodyClass = ""
 } = Astro.props;
 ---
 
@@ -28,11 +27,13 @@ const {
   </head>
   <body class={bodyClass}>
     <div class="page">
-      <CollapsibleSidebar active={active} showRose={showRose} />
+      <CollapsibleSidebar active={active} />
       <main class="content">
-        <slot />
+        <div class="content-body">
+          <slot />
+        </div>
+        <Footer />
       </main>
     </div>
-    {includeRoseScript && <script is:inline src="/rose-pattern.js"></script>}
   </body>
 </html>
